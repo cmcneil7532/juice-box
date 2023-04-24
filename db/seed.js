@@ -12,6 +12,7 @@ const {
   addTagsToPost,
   updatePost,
   getPostsByTagName,
+  getAllTags,
 } = require("./index");
 
 async function dropTables() {
@@ -166,10 +167,11 @@ async function testDB() {
     // console.log(createdTags);
     // console.log("Finished Creating tags");
 
-    console.log("Calling getPostsByTagName with #happy");
-    const postsWithHappy = await getPostsByTagName("#happy");
-    console.log("Result:", postsWithHappy);
-
+    // console.log("Calling getPostsByTagName with #happy");
+    // const postsWithHappy = await getPostsByTagName("#happy");
+    // console.log("Result:", postsWithHappy);
+    // console.log("Grab all tags");
+    // await getAllTags();
     console.log("Finished database tests!");
   } catch (error) {
     console.error(error);

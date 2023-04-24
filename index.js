@@ -12,6 +12,7 @@ app.use(express.json()); //function which reads incoming JSON from requests
 const apiRouter = require("./api");
 
 app.use("/api", apiRouter);
+
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });

@@ -4,10 +4,36 @@ const { Client } = require("pg"); // import pg module
 
 const client = new Client("postgres://localhost:5432/juicebox-dev");
 
+//Grab all
 const getAllUsers = async () => {
   const { rows } = await client.query("SELECT * FROM users;"); //grab all users from the users database
   return rows;
 };
+async function getAllPosts() {
+  try {
+    const { rows: postIds } = await client.query(`
+        SELECT id FROM posts
+        `);
+
+    const posts = await Promise.all(
+      postIds.map((post) => getPostById(post.id))
+    );
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function getAllTags() {
+  try {
+    const { rows } = await client.query(`
+    SELECT * FROM tags
+    `);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
 
 const createUser = async ({ username, password, name, location }) => {
   try {
@@ -103,21 +129,6 @@ async function updatePost(id, fields = {}) {
       Object.values(fields)
     );
     return user;
-  } catch (error) {
-    console.error(error);
-  }
-}
-async function getAllPosts() {
-  try {
-    const { rows: postIds } = await client.query(`
-        SELECT id FROM posts
-        `);
-
-    const posts = await Promise.all(
-      postIds.map((post) => getPostById(post.id))
-    );
-
-    return posts;
   } catch (error) {
     console.error(error);
   }
@@ -336,4 +347,5 @@ module.exports = {
   getPostById,
   updatePost,
   getPostsByTagName,
+  getAllTags,
 };
