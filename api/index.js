@@ -35,11 +35,20 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
+apiRouter.use((req, res, next) => {
+  //If we registered/ login we should have a user
+  if (req.user) {
+    console.log("User is set:", req.user);
+  }
+  next();
+});
+
 apiRouter.use("/users", usersRouter); //When client hits path /user run our usersRouter Funtion
 apiRouter.use("/posts", postsRouter);
 apiRouter.use("/tags", tagsRouter);
 
 apiRouter.use((error, req, res, next) => {
+  //Error handler for all routes in api
   res.send({
     name: error.name,
     error: error.message,

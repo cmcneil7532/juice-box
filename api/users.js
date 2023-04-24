@@ -1,7 +1,9 @@
 require("dotenv").config();
-const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const jwt = require("jsonwebtoken");
 const express = require("express");
+const { createUser } = require("../db");
+
 const usersRouter = express.Router();
 
 const { getAllUsers, getUserByUsername } = require("../db");
@@ -29,7 +31,7 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
   try {
-    const user = await getUserByUsername(username);
+    const user = await getUserByUsername(username); //Import a function that will take username from the input field in our frontend grab the users info
 
     if (user && user.password === password) {
       //Check do we get a returned user and does the user's password match what they typed in the login form to the one in the database
@@ -48,6 +50,41 @@ usersRouter.post("/login", async (req, res, next) => {
   } catch (error) {
     console.log(error);
     next(error);
+  }
+});
+
+usersRouter.post("/register", async (req, res, next) => {
+  const { username, password, name, location } = req.body; //frow our register form grab these values
+
+  try {
+    const _user = await getUserByUsername(username);
+
+    if (_user) {
+      //if the user registers with a user already in the database throw this message
+      next({
+        name: "User already exist",
+        message: "A user by that username already exists.",
+      });
+    }
+    const user = await createUser({
+      //Create a user and put in our database
+      username,
+      password,
+      name,
+      location,
+    });
+    const token = jwt.sign({ id: user.id, username }, JWT_SECRET, {
+      expiresIn: "1w",
+    });
+    res.send({
+      message: "Thank you for signing up",
+      token,
+    });
+  } catch ({ name, message }) {
+    next({
+      name,
+      message,
+    });
   }
 });
 module.exports = usersRouter;
