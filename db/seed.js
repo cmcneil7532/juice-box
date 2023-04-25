@@ -120,7 +120,7 @@ const createInitialUsers = async () => {
 
 const createInitialPosts = async () => {
   try {
-    const [sandra, albert, glamgal, christian] = await getAllUsers();
+    const [albert, sandra, glamgal, christian] = await getAllUsers();
 
     await createPost({
       authorId: albert.id,
@@ -160,18 +160,12 @@ async function rebuildDB() {
 async function testDB() {
   try {
     console.log("Starting to test database...");
-    // const users = await getAllUsers();
-    // console.log("getAllUsers: ", users);
-    // console.log("Creating tags");
-    // const createdTags = await createTags(["#tag", "#othertag", "#onemoretag"]);
-    // console.log(createdTags);
-    // console.log("Finished Creating tags");
-
-    // console.log("Calling getPostsByTagName with #happy");
-    // const postsWithHappy = await getPostsByTagName("#happy");
-    // console.log("Result:", postsWithHappy);
-    // console.log("Grab all tags");
-    // await getAllTags();
+    // const posts = await getAllPosts();
+    // console.log("Calling updatePost on posts[1], only updating tags");
+    // const updatePostTagsResult = await updatePost(posts[1].id, {
+    //   tags: ["#youcandoanything", "#redfish", "#bluefish"],
+    // });
+    // console.log("Result:", updatePostTagsResult);
     console.log("Finished database tests!");
   } catch (error) {
     console.error(error);

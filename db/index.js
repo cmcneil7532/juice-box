@@ -302,7 +302,7 @@ async function updatePost(postId, fields = {}) {
       Object.values(fields)
     );
   }
-  if (setString.length === undefined) {
+  if (tags === undefined) {
     return await getPostById(postId);
   }
 
