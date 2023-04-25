@@ -86,17 +86,17 @@ const createInitialUsers = async () => {
   try {
     console.log("Starting to create users...");
     await createUser({
-      username: "sandra",
-      password: "2sandy4me",
-      name: "Just Sandra",
-      location: " Ain't tellin",
-      active: true,
-    });
-    await createUser({
       username: "albert",
       password: "bertie99",
       name: "Al Bert",
       location: "Sidney, Australia",
+      active: true,
+    });
+    await createUser({
+      username: "sandra",
+      password: "2sandy4me",
+      name: "Just Sandra",
+      location: " Ain't tellin",
       active: true,
     });
     await createUser({
@@ -123,6 +123,12 @@ const createInitialPosts = async () => {
     const [sandra, albert, glamgal, christian] = await getAllUsers();
 
     await createPost({
+      authorId: albert.id,
+      title: "Albert Post",
+      content: "this is my first post",
+      tags: ["#happy", "#youcandoanything", "#canmandoeverything"],
+    });
+    await createPost({
       authorId: sandra.id, //Refernce our author id with users id and push those posts to the user
       title: "Sandra Post",
       content: "this is my first post",
@@ -133,12 +139,6 @@ const createInitialPosts = async () => {
       title: "Christian Post",
       content: "this is my first post",
       tags: ["#happy", "#worst-day-ever"],
-    });
-    await createPost({
-      authorId: albert.id,
-      title: "Albert Post",
-      content: "this is my first post",
-      tags: ["#happy", "#youcandoanything", "#canmandoeverything"],
     });
   } catch (error) {
     console.error(error);
