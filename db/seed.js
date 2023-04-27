@@ -160,12 +160,7 @@ async function rebuildDB() {
 async function testDB() {
   try {
     console.log("Starting to test database...");
-    // const posts = await getAllPosts();
-    // console.log("Calling updatePost on posts[1], only updating tags");
-    // const updatePostTagsResult = await updatePost(posts[1].id, {
-    //   tags: ["#youcandoanything", "#redfish", "#bluefish"],
-    // });
-    // console.log("Result:", updatePostTagsResult);
+    // await getAllUsers();
     console.log("Finished database tests!");
   } catch (error) {
     console.error(error);

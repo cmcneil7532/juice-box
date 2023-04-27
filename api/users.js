@@ -3,6 +3,7 @@ const { JWT_SECRET } = process.env;
 const jwt = require("jsonwebtoken");
 const express = require("express");
 const { createUser } = require("../db");
+const bcrypt = require("bcrypt");
 
 const usersRouter = express.Router();
 
@@ -32,8 +33,10 @@ usersRouter.post("/login", async (req, res, next) => {
   }
   try {
     const user = await getUserByUsername(username); //Import a function that will take username from the input field in our frontend grab the users info
+    const hashedPassword = user.password;
+    const match = await bcrypt.compare(password, hashedPassword);
 
-    if (user && user.password === password) {
+    if (user && match) {
       //Check do we get a returned user and does the user's password match what they typed in the login form to the one in the database
       const token = jwt.sign(user, JWT_SECRET);
       res.send({

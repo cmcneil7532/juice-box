@@ -1,4 +1,6 @@
 const { Client } = require("pg"); // import pg module
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 //Supply the database name and location of the database
 
@@ -36,6 +38,8 @@ async function getAllTags() {
 }
 
 const createUser = async ({ username, password, name, location }) => {
+  const hashPassword = await bcrypt.hash(password, saltRounds); //Begin to hashpassword
+
   try {
     const { rows } = await client.query(
       `
@@ -44,7 +48,7 @@ const createUser = async ({ username, password, name, location }) => {
             ON CONFLICT (username) DO NOTHING
             RETURNING *;
         `,
-      [username, password, name, location]
+      [username, hashPassword, name, location]
     );
     return rows;
   } catch (error) {
