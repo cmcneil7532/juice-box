@@ -58,7 +58,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, name, location } = req.body; //frow our register form grab these values
-  console.log(username, password);
+
   try {
     const _user = await getUserByUsername(username);
 

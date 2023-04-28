@@ -1,10 +1,15 @@
 const { Client } = require("pg"); // import pg module
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-
+const DATABASE_URL = process.env;
 //Supply the database name and location of the database
+const connectionString =
+  DATABASE_URL || "postgres://localhost:5432/juicebox-dev";
 
-const client = new Client("postgres://localhost:5432/juicebox-dev");
+const client = new Client({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+});
 
 //Grab all
 const getAllUsers = async () => {
