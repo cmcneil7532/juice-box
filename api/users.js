@@ -42,6 +42,7 @@ usersRouter.post("/login", async (req, res, next) => {
       res.send({
         messgae: "You're logged in",
         token: token,
+        user: user,
       });
     } else {
       //If no user or the password on the database doesnt match what they typed send error handler message
