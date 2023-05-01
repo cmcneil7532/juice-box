@@ -125,13 +125,13 @@ const createInitialPosts = async () => {
     await createPost({
       authorId: albert.id,
       title: "Albert Post",
-      content: "this is my first post",
+      content: "Albert's Post",
       tags: ["#happy", "#youcandoanything", "#canmandoeverything"],
     });
     await createPost({
       authorId: sandra.id, //Refernce our author id with users id and push those posts to the user
       title: "Sandra Post",
-      content: "this is my first post",
+      content: "Sandras Post",
       tags: ["#happy", "#youcandoanything"],
     });
     await createPost({

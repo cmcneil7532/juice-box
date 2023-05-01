@@ -1,5 +1,6 @@
 function requireUser(req, user, next) {
   //Check if there is a user logged in
+  console.log(req.user);
   if (!req.user) {
     next({
       name: "MissingUserError",

@@ -10,7 +10,7 @@ const apiRouter = express.Router();
 
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
-  const auth = req.header("Authorization");
+  const auth = req.header("Authentication");
 
   if (!auth) {
     // if no Auth header was found will be handled in our error handler

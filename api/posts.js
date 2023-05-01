@@ -1,5 +1,11 @@
 const express = require("express");
-const { getAllPosts, createPost, updatePost, getPostById } = require("../db");
+const {
+  getAllPosts,
+  createPost,
+  updatePost,
+  getPostById,
+  getPostsByUser,
+} = require("../db");
 const { requireUser } = require("./utils");
 
 const postsRouter = express.Router();
@@ -112,6 +118,21 @@ postsRouter.delete("/:postId", requireUser, async (req, res, next) => {
               message: "That post does not exist",
             }
       );
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+postsRouter.get("/:postId", requireUser, async (req, res, next) => {
+  try {
+    const postId = req.params.postId;
+    if (!postId) {
+      next({
+        name: "Invalid authorid",
+        message: "Please provide a valid author id",
+      });
+    } else {
+      res.send({ message: "Heres post", user: req.user });
     }
   } catch ({ name, message }) {
     next({ name, message });
